@@ -16,10 +16,12 @@ const Auth = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     authenticate()
       .then((data: any) => {
-        setAuth(data);
+        setAuth({ ...data });
+
         setLoading(false);
         navigate(("/" + data.role) as string);
       })
+    
       .catch((e) => {
         console.log(e);
       });

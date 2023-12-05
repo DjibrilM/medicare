@@ -7,7 +7,11 @@ function App() {
     <Auth>
       <Routes>
         <Route path="/reception" element={<Rception />} />
-        <Route path="/doctors" element={<>doctors</>} />
+        <Route path="/doctor" element={<>doctors</>} />
+        <Route
+          path="/check"
+          element={<div className="w-full h-20 bg-red-300">check</div>}
+        />
       </Routes>
     </Auth>
   );

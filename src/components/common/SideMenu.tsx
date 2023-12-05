@@ -83,27 +83,29 @@ const menuElements: Record<string, () => ReactNode> = {
 
 const SideMenu = () => {
   const user = useRecoilValue(userSate);
-  const MenuItems = menuElements[user.role];
+  const MenuItems = menuElements.reception;
 
   return (
-    <aside className="min-h-screen max-w-[250px] relative w-full bg-white">
-      <div className="w-full flex items-center justify-center pt-10">
-        <GiHospitalCross className="text-4xl text-primary-600" />
-      </div>
+    <aside className="min-h-screen fixed max-w-[250px] pt-16 w-full bg-white">
+      <div className="w-full h-screen relative">
+        <div className="w-full flex items-center justify-center pt-10">
+          <GiHospitalCross className="text-4xl text-primary-600" />
+        </div>
 
-      <div className="w-full h-full flex flex-col  justify-between">
-        <ul className="w-full gap-5 flex flex-col px-5 pt-10 ">
-          <MenuItems />
-        </ul>
+        <div className="w-full h-full flex flex-col  justify-between">
+          <ul className="w-full gap-5 flex flex-col px-5 pt-10 ">
+            <MenuItems />
+          </ul>
 
-        <div className="w-full flex  items-center h-20 bottom-0 absolute  px-5 ">
-          <Button
-            className="w-full flex items-center justify-center gap-2"
-            variant={"contained"}
-          >
-            <TbLogout2 className="text-2xl" />
-            <span className="">Logout</span>
-          </Button>
+          <div className="w-full flex  items-center h-20 bottom-20 absolute  px-5 ">
+            <Button
+              className="w-full flex items-center justify-center gap-2"
+              variant={"contained"}
+            >
+              <TbLogout2 className="text-2xl" />
+              <span className="">Logout</span>
+            </Button>
+          </div>
         </div>
       </div>
     </aside>
