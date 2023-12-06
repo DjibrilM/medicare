@@ -8,7 +8,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       <SideMenu />
       <div className="w-full h-full">
         <MainHeader />
-        <div className=" mt-16  ml-[250px] w-full h-full">{children}</div>
+        <div className=" mt-16  ml-[250px] max-w-[calc(100vw-250px)] h-full">{children}</div>
       </div>
     </main>
   );
