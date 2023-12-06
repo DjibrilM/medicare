@@ -5,7 +5,7 @@ import { cn } from "../../../util/cn";
 interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: ButtonVariants;
   children: ReactNode;
-  rounded: boolean;
+  rounded?: boolean;
 }
 
 const IconButton: React.FC<CustomButtonProps> = ({
