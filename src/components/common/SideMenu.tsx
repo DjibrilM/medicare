@@ -3,8 +3,9 @@ import { GrHomeRounded } from "react-icons/gr";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { MdSupervisorAccount } from "react-icons/md";
 import { IoLeafOutline } from "react-icons/io5";
-import { useRecoilValue } from "recoil";
-import userSate from "../../state/user";
+// import { useRecoilValue } from "recoil";
+// import userSate from "../../state/user";
+import { BsClockHistory } from "react-icons/bs";
 import { ReactNode } from "react";
 import Button from "./Button";
 import { TbLogout2 } from "react-icons/tb";
@@ -17,15 +18,15 @@ const menuElements: Record<string, () => ReactNode> = {
       <NavLink
         to={"/reception"}
         className={({ isActive }) =>
-          cn({
-            "active-side-menu text-primary-500 font-bold": isActive,
+          cn("hover:text-primary-500", {
+            "active-side-menu text-primary-500 font-bold ": isActive,
             " text-text-500": !isActive,
           })
         }
       >
         <li className="flex items-center relative gap-3 pt-5">
-          <GrHomeRounded />
-          <span className=" ">Home</span>{" "}
+          <GrHomeRounded className="text-3xl" />
+          <span className="text-sm ">Home</span>{" "}
           <div className="w-full absolute"></div>
         </li>
       </NavLink>
@@ -33,15 +34,15 @@ const menuElements: Record<string, () => ReactNode> = {
       <NavLink
         to={"/doctors"}
         className={({ isActive }) =>
-          cn({
+          cn("hover:text-primary-500", {
             "active-side-menu text-primary-500 font-bold": isActive,
             " text-text-500": !isActive,
           })
         }
       >
         <li className="flex items-center relative gap-3 pt-5">
-          <MdSupervisorAccount />
-          <span className=" ">Doctors</span>{" "}
+          <MdSupervisorAccount className="text-3xl" />
+          <span className="text-sm">Doctors</span>{" "}
           <div className="w-full absolute"></div>
         </li>
       </NavLink>
@@ -49,15 +50,15 @@ const menuElements: Record<string, () => ReactNode> = {
       <NavLink
         to={"/clients"}
         className={({ isActive }) =>
-          cn({
+          cn("hover:text-primary-500", {
             "active-side-menu text-primary-500 font-bold": isActive,
             " text-text-500": !isActive,
           })
         }
       >
         <li className="flex items-center relative gap-3 pt-5">
-          <HiMiniUserGroup />
-          <span className=" ">Clients</span>{" "}
+          <HiMiniUserGroup className="text-3xl" />
+          <span className="text-sm">Clients</span>{" "}
           <div className="w-full absolute"></div>
         </li>
       </NavLink>
@@ -65,15 +66,31 @@ const menuElements: Record<string, () => ReactNode> = {
       <NavLink
         to={"/pharmacy"}
         className={({ isActive }) =>
-          cn({
+          cn("hover:text-primary-500", {
             "active-side-menu text-primary-500 font-bold": isActive,
             " text-text-500": !isActive,
           })
         }
       >
         <li className="flex items-center relative gap-3 pt-5">
-          <IoLeafOutline />
-          <span className=" ">Pharmacy</span>{" "}
+          <IoLeafOutline className="text-3xl" />
+          <span className="text-sm">Pharmacy</span>{" "}
+          <div className="w-full absolute"></div>
+        </li>
+      </NavLink>
+
+      <NavLink
+        to={"/pharmacy"}
+        className={({ isActive }) =>
+          cn("hover:text-primary-500", {
+            "active-side-menu text-primary-500 font-bold": isActive,
+            " text-text-500": !isActive,
+          })
+        }
+      >
+        <li className="flex items-center relative gap-3 pt-5">
+          <BsClockHistory className="text-3xl" />
+          <span className="text-sm">Cases History</span>{" "}
           <div className="w-full absolute"></div>
         </li>
       </NavLink>
@@ -82,13 +99,13 @@ const menuElements: Record<string, () => ReactNode> = {
 };
 
 const SideMenu = () => {
-  const user = useRecoilValue(userSate);
+  // const user = useRecoilValue(userSate);
   const MenuItems = menuElements.reception;
 
   return (
-    <aside className="min-h-screen fixed max-w-[250px] pt-16 w-full bg-white">
+    <aside className="min-h-screen border-r border-[#9c949414] fixed max-w-[250px] pt-16 w-full bg-white">
       <div className="w-full h-screen relative">
-        <div className="w-full flex items-center justify-center pt-10">
+        <div className="w-full flex items-center justify-center">
           <GiHospitalCross className="text-4xl text-primary-600" />
         </div>
 
