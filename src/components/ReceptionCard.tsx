@@ -11,7 +11,7 @@ const ReceptionCard: React.FC<Props> = ({ background, count, Icon, label }) => {
   return (
     <div
       style={{ background: background }}
-      className="max-w-[100%]  items-center shadow-md select-none justify-between w-[420px]  flex px-6 py-8 rounded-[15px]"
+      className="w-[100%]  items-center select-none justify-between   flex px-6 py-8 rounded-[15px]"
     >
       <div className="">
         <p className=" text-white opacity-50">{label}</p>

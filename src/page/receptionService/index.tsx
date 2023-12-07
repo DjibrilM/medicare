@@ -8,7 +8,7 @@ import ReceptionCaseTable from "../../components/ReceptionCaseTable";
 const RecpetionService: React.FC = () => {
   return (
     <main className="w-full p-4   h-full ">
-      <div className="flex md:flex-nowrap flex-wrap  gap-5 pt-5">
+      <div className="flex md:flex-nowrap md:gap-5 flex-wrap justify-between pt-5">
         <ReceptionCard
           background="linear-gradient(to top right, #F87171 1%, #CF1512 100%)"
           Icon={<CiMedicalCase />}
