@@ -8,7 +8,7 @@ import { TbFingerprintScan } from "react-icons/tb";
 function ReceptionCaseTable() {
   return (
     <table className="w-full bg-white rounded-md overflow-hidden p-3">
-      <div className="flex px-4 py-6 w-full justify-between">
+      <div className="flex px-6 py-6 w-full justify-between">
         <div className="">
           <h1 className="text-[18px] text-text-700 font-semibold">
             List of cases
@@ -28,10 +28,10 @@ function ReceptionCaseTable() {
         </div>
       </div>
 
-      <div className="p-4">
+      <div className="px-6">
         <table className="w-full">
           <tr className="justify-between text-text-500 text-sm font-semibold">
-            <th className="p-4 px-7 rounded-tl-lg rounded-bl-lg bg-gray-200">
+            <th className="rounded-tl-lg rounded-bl-lg bg-gray-200">
               Name
             </th>
             <th className="p-4 px-7 bg-gray-200">Number</th>

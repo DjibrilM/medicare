@@ -23,7 +23,7 @@ const ReceptionTableListEl: React.FC<ReceptionListElement> = ({
 }) => {
   return (
     <tr className="w-full rounded-lg m-4  justify-between  text-text-500 text-sm font-semibold">
-      <td className="flex gap-2 py-6  pl-4">
+      <td className="flex gap-2 py-6 ">
         <div className="">{sex === "m" ? <AvatarM /> : <AvatarF />}</div>
         <div className="">
           <h1 className="text-bold">{firstName}</h1>
@@ -35,12 +35,12 @@ const ReceptionTableListEl: React.FC<ReceptionListElement> = ({
       <td className="text-center">{age}</td>
       <td className="text-center">{id}</td>
       <td className="text-center   justify-center">
-        <div className="flex justify-center">
-          <p> {testCount}</p>
+        <div className="flex justify-between">
+          <p className="relative left-[50%]"> {testCount}</p>
           <IconButton
             rounded={false}
             variant="outline"
-            className=" relative bottom-3 left-8"
+            className=" relative bottom-3 "
           >
             <FiArrowRight />
           </IconButton>
