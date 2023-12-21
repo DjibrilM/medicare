@@ -12,8 +12,8 @@ export function UseAuthentication() {
 
   const authenticate = async () => {
     setLoading(true);
-    const getToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODM3YzE2OTA2ZDYyOTllNWZiYjE5NiIsIm5hbWUiOiJkamlicmlsIG11ZyIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDMxMTU3OTgsImV4cCI6MTcwMzExNTgwOH0.DOdjdJfiWjRyEITvcL-AqIab-hFIcTqHukol3y6AjVk";
+    const getToken = localStorage.getItem("token");
+
     if (!getToken) {
       navigate("/auth/signin");
     }
@@ -33,11 +33,13 @@ export function UseAuthentication() {
       });
 
       setLoading(false);
+      navigate("/");
     } catch (error: any) {
-      if (error.response.data.message === jwtExpirationMessage) {
+      if (error.response?.data.message === jwtExpirationMessage) {
         setLoading(false);
         navigate("/session-end");
       } else {
+        setLoading(false);
         navigate("auth/signin");
       }
     }

@@ -1,26 +1,84 @@
-import { Link } from "react-router-dom";
-import LogoDark from "../../images/logo/logo-dark.svg";
-import Logo from "../../images/logo/logo.svg";
+import { useFormik } from "formik";
+import { cn } from "../../util/cn";
+import * as Yup from "yup";
+import axios from "axios";
+import { MdErrorOutline } from "react-icons/md";
+import { useState } from "react";
+import { backendUrl } from "../../lib/constant";
+import userAtom from "../../state/user";
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const signIn = () => {};
+  const [error, setError] = useState<string>("");
+  const [__, setUser] = useRecoilState(userAtom);
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      await login(values);
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required("Email is required")
+        .email("Please enter a valid email."),
+      password: Yup.string()
+        .required("password can't be empty")
+        .matches(
+          /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*])/,
+          "Password must contain at least one number, one uppercase letter, and one special character"
+        ),
+    }),
+  });
+
+  const login = async (values: { email: string; password: string }) => {
+    try {
+      setLoading(true);
+      const request = await axios.post(backendUrl + "auth/login", {
+        password: values.password,
+        email: values.email,
+      });
+
+      setLoading(false);
+      setUser({ ...request.data.user, loggedIn: true });
+      localStorage.setItem("token", request.data.access_token);
+      navigate("/");
+    } catch (error: unknown | any) {
+      setError(error.response.data.message || (error.message as string));
+    }
+  };
 
   return (
     <main className="w-full min-h-screen flex items-center justify-center">
-      <div className="max-w-[800px] rounded-md w-full border border-stroke bg-white m-auto  dark:border-strokedark dark:bg-boxdark">
+      <div className="max-w-[800px] mx-3 rounded-md w-full border border-stroke bg-white m-auto  dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap justify-center items-center">
           <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <h1 className="my-10 text-2xl font-bold">Welcome back 😇</h1>
-              <div className="mb-4">
+              <div className="mb-6">
                 <label className="mb-2.5 block font-medium text-black dark:text-white">
                   Email
                 </label>
                 <div className="relative">
                   <input
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    name="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    className={cn(
+                      "w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary",
+                      {
+                        "border-red-500 text-red-400 focus:border-red-400":
+                          formik.errors.email && formik.touched.email,
+                      }
+                    )}
                   />
 
                   <span className="absolute right-4 top-4">
@@ -41,17 +99,35 @@ const SignIn = () => {
                     </svg>
                   </span>
                 </div>
+
+                <span
+                  className={cn("text-red-500 absolute text-sm min-h-[5px]")}
+                >
+                  {formik.errors.email &&
+                    formik.touched.email &&
+                    formik.errors.email}
+                </span>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-10">
                 <label className="mb-2.5 block font-medium text-black dark:text-white">
-                  Re-type Password
+                  Password
                 </label>
                 <div className="relative">
                   <input
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    name="password"
                     type="password"
                     placeholder="6+ Characters, 1 Capital letter"
-                    className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    className={cn(
+                      "w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary",
+                      {
+                        "border-red-500 text-red-400 focus:border-red-400":
+                          formik.errors.password && formik.touched.password,
+                      }
+                    )}
                   />
 
                   <span className="absolute right-4 top-4">
@@ -76,16 +152,34 @@ const SignIn = () => {
                     </svg>
                   </span>
                 </div>
+
+                <span className={cn("text-red-500 absolute text-sm")}>
+                  {formik.errors.password &&
+                    formik.touched.password &&
+                    formik.errors.password}
+                </span>
               </div>
 
-              <div className="mb-5">
+              <div className="mb-5 mt-3">
                 <input
+                  disabled={loading}
                   type="submit"
-                  value="Sign In"
-                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                  value={loading ? "...loading" : "Sign In"}
+                  className="w-full disabled:bg-gray disabled:text-black cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                 />
               </div>
             </form>
+            <div
+              className={cn(
+                "bg-red-200 flex select-none items-center gap-3 w-full text-white border border-red-800 p-2",
+                {
+                  "opacity-0": !error,
+                }
+              )}
+            >
+              <MdErrorOutline />
+              <span>{error}</span>
+            </div>
           </div>
         </div>
       </div>
