@@ -1,20 +1,20 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { Suspense, lazy, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
-import ECommerce from './pages/Dashboard/Admin';
-import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
-import Loader from './common/Loader';
-import routes from './routes';
+import Home from "./pages/Dashboard/Admin";
+import SignIn from "./pages/Authentication/SignIn";
+import Loader from "./common/Loader";
+import routes from "./routes";
+import { UseAuthentication } from "./util/hooks/useAuth";
+import SessionEnd from "./pages/error/session-end";
 
-const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
-
+const DefaultLayout = lazy(() => import("./layout/DefaultLayout"));
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
+  const { loading, authenticate } = UseAuthentication();
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
+    authenticate();
   }, []);
 
   return loading ? (
@@ -26,12 +26,14 @@ function App() {
         reverseOrder={false}
         containerClassName="overflow-auto"
       />
+
       <Routes>
         <Route path="/auth/signin" element={<SignIn />} />
-        <Route path="/auth/signup" element={<SignUp />} />
-        
+        <Route path="/session-end" element={<SessionEnd />} />
+
         <Route element={<DefaultLayout />}>
-          <Route index element={<ECommerce />} />
+          <Route index element={<Home />} />
+
           {routes.map((routes, index) => {
             const { path, component: Component } = routes;
             return (

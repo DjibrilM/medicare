@@ -92,3 +92,5 @@ export const receptionCasesListData: ReceptionListElement[] = [
     id: "a10496ad967faa51a0b3005966301",
   },
 ];
+
+export const jwtExpirationMessage = "jwt expired";
